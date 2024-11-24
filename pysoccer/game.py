@@ -61,14 +61,10 @@ while ESTADO_JUGANDO:
         balon.velocidad[0]=-balon.velocidad[0]
     if balon.react.top < 0 or balon.react.bottom > ventana.get_height():
         balon.velocidad[1] = -balon.velocidad[1]
-        
-    # if player1.rect.left < 0 or player1.rect.right > ventana.get_height():
-    #     print("pegado izquierda")
-    #     player1.rect.move(y=0) = -player1.rect.move(y=0)
-    
-    # if player1.rect.left < 0 or player1.rect.right > ventana.get_width():
-    #     print("pegado izquierda")
-    #     player1.rect.move[0] = -player1.rect.move[0]  # Invertir la velocidad horizontal
+    boton = pygame.key.get_pressed()
+    if boton[pygame.K_ESCAPE]:
+        ESTADO_JUGANDO = False        
+
     ventana.fill(color=colores)
     ventana.blit(FONDOVENTANA,(0,2))
     
