@@ -1,4 +1,4 @@
-# PySoccer - Juego en Python con Pygame
+# PySoccer 
 
 **PySoccer** es un juego de fútbol desarrollado en **Python** utilizando la librería **Pygame**. El juego permite a los jugadores controlar a un jugador y disfrutar de una simulación de fútbol sencilla pero entretenida.
 
