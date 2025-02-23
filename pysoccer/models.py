@@ -5,12 +5,14 @@ from typing import Any
 #  Clase balon que tiene movimiento optimizado
 
 
+RESOLUCION : tuple = (780, 980)
+
 class Balon(pygame.sprite.Sprite):
     def __init__(self, velocidad: list[int]) -> None:
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("./assets/SoccerBall.png")
         self.react = self.image.get_rect()
-        self.move_ip = self.react.move_ip(0, 0)
+        self.move_ip = self.react.move_ip(440, 50)
         self.velocidad = velocidad
         self.movimiento = self.react.move(velocidad)
 
@@ -23,22 +25,24 @@ class Balon(pygame.sprite.Sprite):
         self.ventanaSurface.blit(self.image, self.react)
 
 
-# Clase con atributos del FANTASMA
+# Clase con atributos del Kate
 
 
 class Kate(pygame.sprite.Sprite):
     def __init__(self) -> None:
         pygame.sprite.Sprite.__init__(self)
         self.images = {
+            "kateLeftTop": pygame.image.load("./assets/player1/left_top.png"),
+            "kateRightBottom": pygame.image.load("./assets/player1/right_bottom.png"),
             "kateLeft": pygame.image.load(
                 "./assets/player1/left.png"
-            ),  # Imagen de la izquierda
+            ),  
             "kateRight": pygame.image.load(
                 "./assets/player1/right.png"
-            ),  # Imagen de la derecha
+            ),  
             "kateDefault": pygame.image.load(
                 "./assets/player1/default.png"
-            ),  # Imagen default
+            ),  
             "kateBack": pygame.image.load("./assets/player1/back.png"),
         }
 
@@ -64,6 +68,11 @@ class Kate(pygame.sprite.Sprite):
         if self.botones[pygame.K_DOWN]:
             self.rect = self.rect.move(0, 3)
             self.imagenActual = self.images["kateBack"]
+        if self.botones[pygame.K_UP] and self.botones[pygame.K_LEFT]:
+            self.imagenActual = self.images["kateLeftTop"]
+        if self.botones[pygame.K_DOWN] and self.botones[pygame.K_RIGHT]:
+            self.imagenActual = self.images["kateRightBottom"]
+            print("Aqui")
 
 
 # Clase con atributos de Messi
@@ -73,15 +82,16 @@ class Messi(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.images = {
-            "lidiaRight" : pygame.image.load("./assets/player2/right.png") ,
-            "lidiaDefault" : pygame.image.load("./assets/player2/default.png"),
-            "lidiaLeft" : pygame.image.load("./assets/player2/left.png") ,
-            "lidiaBack" : pygame.image.load("./assets/player2/back.png") 
+            "lidiaRight": pygame.image.load("./assets/player2/right.png"),
+            "lidiaDefault": pygame.image.load("./assets/player2/default.png"),
+            "lidiaLeft": pygame.image.load("./assets/player2/left.png"),
+            "lidiaBack": pygame.image.load("./assets/player2/back.png"),
         }
         self.image = self.images["lidiaDefault"]
         self.rect = self.image.get_rect()
         self.rect.move_ip(400, 1)
         self.run = False
+
     def movimientos(self) -> None:
         self.botones = pygame.key.get_pressed()
         if self.botones[pygame.K_a]:
@@ -130,6 +140,7 @@ class Musica(metaclass=SinglentonMetaMusic):
 
 # Sonidos class (PRINCIPALMENTE PARA COLLISIONES O DISPAROS)
 
+
 class Sonidos:
     def __init__(self):
         pygame.mixer.init()
@@ -137,8 +148,6 @@ class Sonidos:
     def reproducir(self, sound):
         self.sonido = pygame.mixer.Sound(sound)
         self.sonido.play()
-        
-        
 
 
 # PROXIMAMENTE AÑADIR COLLISION CON LA VENTANA PARA Q EL PERSONAJE NO PASE DE LA VENTANA

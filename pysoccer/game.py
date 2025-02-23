@@ -28,9 +28,9 @@ velocidad: list = [6, 6]
 player1: object = Kate()
 player2: object = Messi()
 balon = Balon(velocidad=velocidad)
-puntos = 0
 
-ESTADO_JUGANDO: bool = True
+
+
 
 
 # Collisiones de los personajes y pelotas
@@ -48,14 +48,22 @@ def movimientosPersonajes():
     player2.movimientos()
     player1.movimientos()
 
+# Status playing
+
+ESTADO_JUGANDO: bool = True
+is_not_GOAL : bool = True
+
+
+# Goles
 
 goles_kate: int = 0
 goles_messi: int = 0
 
 
-while ESTADO_JUGANDO:
+while ESTADO_JUGANDO  :
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            is_not_GOAL = False
             ESTADO_JUGANDO = False
 
     movimientosPersonajes()
@@ -64,15 +72,16 @@ while ESTADO_JUGANDO:
     if balon.react.left < 0 or balon.react.right > ventana.get_width():
         balon.velocidad[0] = -balon.velocidad[0]
     if balon.react.top < 0 or balon.react.bottom > ventana.get_height():
-        print(ventana.get_height() / 2)
-        if ventana.get_height() / 2 and balon.react.bottom:
-            goles_kate += 1
-            print(f"Gol de Kate {goles_kate}")
-        if ventana.get_height() / 2 and balon.react.top:
-            goles_messi += 1
-            print(f"Gold de Messi {goles_messi}")   
+        print(ventana.get_height() / 2)   
         balon.velocidad[1] = -balon.velocidad[1]
-    boton = pygame.key.get_pressed() 
+    boton = pygame.key.get_pressed()
+    
+    
+    if balon.react.bottomright:
+        print("Balo inpacto arriba")
+        is_not_GOAL = False
+    
+    
     if boton[pygame.K_ESCAPE]:
         ESTADO_JUGANDO = False
 
